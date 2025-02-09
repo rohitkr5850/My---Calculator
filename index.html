@@ -7,14 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: rgba(25, 25, 25, 0.8); /* Darker, more professional background */
-            --button-color: rgba(255, 255, 255, 0.15); /* Subtle button background */
+            --bg-color: rgba(25, 25, 25, 0.8);
+            --button-color: rgba(255, 255, 255, 0.15);
             --button-hover-color: rgba(255, 255, 255, 0.25);
-            --text-color: #eee; /* Lighter text for better contrast */
-            --accent-color: #00aaff; /* Vibrant blue for highlights */
-            --error-color: #ff4545; /* Error color */
-            --shadow-color: rgba(0, 0, 0, 0.5); /* Deeper shadow */
-            --border-color: rgba(255, 255, 255, 0.1); /* Subtle border */
+            --text-color: #eee;
+            --accent-color: #00aaff;
+            --error-color: #ff4545;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --border-color: rgba(255, 255, 255, 0.1);
         }
 
         body {
@@ -22,140 +22,146 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #0d0d0d, #1a1a1a); /* Darker gradient */
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
             color: var(--text-color);
-            margin: 0; /* Remove default body margin */
-            overflow: hidden; /* Prevents scrollbars during animations */
-            transition: background 0.3s ease; /* Smooth transition for theme changes */
+            margin: 0;
+            overflow: hidden;
+            transition: background 0.3s ease;
         }
 
         .calculator {
-            width: 380px; /* Slightly wider */
-            padding: 25px; /* More padding */
-            border-radius: 25px; /* More rounded corners */
-            backdrop-filter: blur(20px); /* Stronger blur */
+            width: 95%;
+            max-width: 380px;
+            padding: 15px;
+            padding-top: 45px; /* Add padding to the top of the calculator */
+            border-radius: 25px;
+            backdrop-filter: blur(20px);
             background: var(--bg-color);
             box-shadow: 0 15px 40px var(--shadow-color);
             text-align: center;
-            border: 1px solid var(--border-color); /* Added subtle border */
-            position: relative; /* For absolute positioning of theme toggle */
-            overflow: hidden; /* Hide overflowing content (e.g., long history) */
+            border: 1px solid var(--border-color);
+            position: relative;  /* VERY IMPORTANT */
         }
 
         .display {
-            width: calc(100% - 30px); /* Adjusted for padding */
-            height: 80px; /* Taller display */
-            background: rgba(0, 0, 0, 0.3); /* Darker display background */
+            width: calc(100% - 20px);
+            height: auto;
+            min-height: 80px;
+            background: rgba(0, 0, 0, 0.3);
             color: var(--text-color);
-            font-size: 2.5em; /* Larger font size */
-            padding: 15px;
+            font-size: 2em;
+            padding: 10px;
             text-align: right;
             border: none;
             outline: none;
-            border-radius: 15px; /* More rounded */
-            margin-bottom: 20px; /* More spacing */
-            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4); /* Inner shadow */
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4);
+            word-wrap: break-word;
+            overflow: hidden;
+        }
+          /* Responsive font sizes for different screen sizes */
+        @media (max-width: 479px) {
+            .display { font-size: 1.8em;  }
+            button { font-size: 1.2em;}
+             .history p { font-size: 1em;}
+             .btn-pi { font-size: 1em; } /* Further reduce font size */
         }
 
+        @media (min-width: 480px) and (max-width: 767px){
+            .display { font-size: 2.2em;  }
+            button { font-size: 1.6em;}
+             .history p { font-size: 1.1em;}
+        }
+
+        @media (min-width: 768px) {
+            .display { font-size: 2.5em;}
+            button { font-size: 1.6em; }
+            .history p { font-size: 1.2em;}
+        }
         .buttons {
             display: grid;
-            grid-template-columns: repeat(5, 1fr); /* 5 columns for added functions */
-            gap: 12px; /* Slightly more gap */
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
         }
 
         button {
-            height: 60px; /* Taller buttons */
+            height: auto;
+            min-height: 50px;
+            padding: 10px 0;
             border: none;
-            font-size: 1.6em;
+            font-size: 1.4em;
             font-weight: 600;
-            border-radius: 15px; /* More rounded */
+            border-radius: 15px;
             cursor: pointer;
             transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
             color: var(--text-color);
             background: var(--button-color);
-            box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4); /* Deeper shadow */
-            outline: none; /* Remove outline on focus */
+            box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
+            outline: none;
         }
 
         button:hover {
-            transform: translateY(-3px); /* Lift on hover */
+            transform: translateY(-3px);
             background: var(--button-hover-color);
             box-shadow: 3px 6px 15px rgba(0, 0, 0, 0.5);
         }
 
         button:active {
-            transform: translateY(-1px); /* Subtle press effect */
+            transform: translateY(-1px);
             box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.4);
         }
-        .btn-clear{
-           background: #ff4500;
-        }
+
+        .btn-clear { background: #ff4500; }
         .btn-operator { background: #ff9500; }
-        .btn-equal { background: #00c853;  }
-        .btn-memory { background: #6200ea; }  /* Purple */
-        .btn-pi { font-size: 1.4em; } /* Smaller font for π */
+        .btn-equal { background: #00c853; }
+        .btn-memory { background: #6200ea; }
+        .btn-pi { font-size: 1.2em; }
 
         .history {
-            margin-top: 20px;
-            max-height: 200px; /* Increased max height */
+            margin-top: 15px;
+            max-height: 150px;
             overflow-y: auto;
             text-align: left;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.3); /* Darker history background */
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 15px;
-            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4); /* Inner shadow */
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .history p {
-            margin: 8px 0; /* More vertical spacing */
-            font-size: 1.1em; /* Slightly larger font */
-            word-wrap: break-word; /* Handles long expressions */
-            padding-bottom: 4px;
+            margin: 6px 0;
+            font-size: 1em;
+            word-wrap: break-word;
+            padding-bottom: 3px;
             border-bottom: 1px solid var(--border-color);
         }
-         .history p:last-child {
-            border-bottom: none; /* Remove border from the last item */
+
+        .history p:last-child {
+            border-bottom: none;
         }
+
         /* width */
-            ::-webkit-scrollbar {
-            width: 8px;
-            }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #007acc; }
 
-            /* Track */
-            ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            }
-
-            /* Handle */
-            ::-webkit-scrollbar-thumb {
-            background: var(--accent-color);
-            border-radius: 10px;
-            }
-
-            /* Handle on hover */
-            ::-webkit-scrollbar-thumb:hover {
-            background: #007acc; /* Slightly darker on hover */
-            }
-
-
-        /* Theme Toggle Styles (now a switch) */
+        /* Theme Toggle */
         .theme-toggle-container {
-            position: absolute; /*  Keep absolute positioning */
-            top: 0px;        /*  Keep the top spacing */
-            left: 50%;       /*  Position the left edge at 50% of the parent */
-            transform: translateX(-50%); /*  Shift it left by half its own width */
-            /*  Remove right: 15px;  No longer needed */
-            /* Optional: Add z-index if needed to ensure it's on top */
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 10;
         }
 
         .theme-toggle {
-            position: relative;
-            display: inline-block;
             width: 60px;
             height: 30px;
+            position: relative;
+            display: inline-block;
         }
 
         .theme-toggle input {
@@ -188,15 +194,11 @@
             border-radius: 50%;
         }
 
-        input:checked + .slider {
-            background-color: var(--accent-color);
-        }
 
-        input:checked + .slider:before {
-            transform: translateX(30px);
-        }
+        input:checked + .slider { background-color: var(--accent-color); }
+        input:checked + .slider:before { transform: translateX(27px); }
 
-        /* Light Mode Styles */
+        /* Light Mode */
         .light-mode {
             background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
             --bg-color: rgba(255, 255, 255, 0.8);
@@ -208,22 +210,32 @@
             --shadow-color: rgba(0, 0, 0, 0.2);
             --border-color: rgba(0, 0, 0, 0.1);
         }
-          .light-mode .display {
-                background: rgba(255, 255, 255, 0.7); /* Lighter background */
-                box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
-            }
+
+        .light-mode .display {
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
 
         .light-mode .history {
-                background: rgba(255, 255, 255, 0.7);
-            }
+            background: rgba(255, 255, 255, 0.7);
+        }
 
-          .light-mode button:hover {
-                box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
-            }
+        .light-mode button:hover {
+            box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+        }
 
         .light-mode .history::-webkit-scrollbar-track {
-                 background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        @media (max-width: 400px) {
+            .btn-memory {
+                display: none;
             }
+            .buttons {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
     </style>
 </head>
 <body>
@@ -235,29 +247,26 @@
             <button class="btn-clear" onclick="clearDisplay()">C</button>
             <button class="btn-memory" onclick="memoryRecall()">MR</button>
             <button class="btn-memory" onclick="memoryClear()">MC</button>
-             <button class="btn-memory" onclick="memoryAdd()">M+</button>
-             <button class="btn-memory" onclick="memorySubtract()">M-</button>
+            <button class="btn-memory" onclick="memoryAdd()">M+</button>
+            <button class="btn-memory" onclick="memorySubtract()">M-</button>
 
             <button onclick="scientific('sin')">sin</button>
             <button onclick="scientific('cos')">cos</button>
             <button onclick="scientific('tan')">tan</button>
-              <button onclick="scientific('asin')">sin⁻¹</button>
+            <button onclick="scientific('asin')">sin⁻¹</button>
             <button onclick="scientific('acos')">cos⁻¹</button>
-
 
             <button onclick="scientific('sqrt')">√</button>
             <button onclick="scientific('log')">log</button>
-            <button onclick="appendOperator('**')">xʸ</button>  <!-- Use ** for exponentiation -->
+            <button onclick="appendOperator('**')">xʸ</button>
             <button onclick="scientific('ln')">ln</button>
-              <button class="btn-pi" onclick="appendNumber(Math.PI.toFixed(5))">π</button>
-
-
+            <button class="btn-pi" onclick="appendNumber(Math.PI.toFixed(5))">π</button>
 
             <button onclick="appendNumber(7)">7</button>
             <button onclick="appendNumber(8)">8</button>
             <button onclick="appendNumber(9)">9</button>
-           <button class="btn-operator" onclick="appendOperator('/')">÷</button>
-            <button onclick="backspace()">⌫</button> <!-- Backspace button -->
+            <button class="btn-operator" onclick="appendOperator('/')">÷</button>
+            <button onclick="backspace()">⌫</button>
 
             <button onclick="appendNumber(4)">4</button>
             <button onclick="appendNumber(5)">5</button>
@@ -265,23 +274,21 @@
             <button class="btn-operator" onclick="appendOperator('*')">×</button>
             <button onclick="scientific('percent')">%</button>
 
-
             <button onclick="appendNumber(1)">1</button>
             <button onclick="appendNumber(2)">2</button>
             <button onclick="appendNumber(3)">3</button>
-           <button class="btn-operator" onclick="appendOperator('-')">−</button>
-             <button onclick="toggleSign()">+/-</button>
+            <button class="btn-operator" onclick="appendOperator('-')">−</button>
+            <button onclick="toggleSign()">+/-</button>
 
             <button onclick="appendNumber(0)">0</button>
             <button onclick="appendOperator('.')">.</button>
-              <button onclick="scientific('fact')">x!</button>
+            <button onclick="scientific('fact')">x!</button>
             <button class="btn-equal" onclick="calculate()">=</button>
-             <button class="btn-operator" onclick="appendOperator('+')">+</button>
-
+            <button class="btn-operator" onclick="appendOperator('+')">+</button>
         </div>
 
         <div class="history" id="history"></div>
-           <!-- Theme Toggle (Switch) -->
+
         <div class="theme-toggle-container">
             <label class="theme-toggle">
                 <input type="checkbox" id="theme-checkbox" onclick="toggleTheme()">
@@ -293,42 +300,38 @@
     <script>
         let display = document.getElementById("display");
         let historyPanel = document.getElementById("history");
-        let memory = 0;  // Memory store
+        let memory = 0;
 
         function appendNumber(num) { display.value += num; }
         function appendOperator(operator) { if (display.value) display.value += operator; }
         function clearDisplay() { display.value = ""; }
 
-          function calculate() {
+        function calculate() {
             try {
                 let expression = display.value;
-                // Replace display symbols with valid operators
                 expression = expression.replace(/×/g, '*').replace(/÷/g, '/');
-
-                // Evaluate using a safer approach than eval()
                 let result = new Function('return ' + expression)();
 
-                // Check for Infinity and NaN
                 if (!Number.isFinite(result)) {
                     display.value = "Error";
                     return;
                 }
 
-                result = Number(result.toFixed(10));  // Limit to 10 decimal places, convert back to number to remove trailing zeros
-
+                result = Number(result.toFixed(10));
                 historyPanel.innerHTML += `<p>${expression} = ${result}</p>`;
                 display.value = result;
-                historyPanel.scrollTop = historyPanel.scrollHeight; // Auto-scroll
+                historyPanel.scrollTop = historyPanel.scrollHeight;
             } catch (error) {
                 display.value = "Error";
             }
         }
-       function scientific(func) {
+
+        function scientific(func) {
             let value = parseFloat(display.value);
-            if (isNaN(value) && func != 'fact') { //factorial can take empty string
+            if (isNaN(value) && func != 'fact') {
                 display.value = "Error";
                 return;
-              }
+            }
 
             switch (func) {
                 case "sin": display.value = Math.sin(value * Math.PI / 180).toFixed(5); break;
@@ -338,17 +341,17 @@
                 case "acos": display.value = (Math.acos(value) * 180 / Math.PI).toFixed(5); break;
                 case "sqrt": display.value = Math.sqrt(value).toFixed(5); break;
                 case "log": display.value = Math.log10(value).toFixed(5); break;
-                case "ln": display.value = Math.log(value).toFixed(5); break;  // Natural log
+                case "ln": display.value = Math.log(value).toFixed(5); break;
                 case "percent": display.value = (value / 100).toFixed(5); break;
                 case "fact":
                     let num = parseInt(display.value, 10);
                     if (num < 0 || !Number.isInteger(num)) {
-                        display.value = "Error"; // Factorial is not defined for negative numbers or non-integers
+                        display.value = "Error";
                         return;
                     }
                     if (num > 170) {
                         display.value = "Infinity";
-                        return
+                        return;
                     }
                     let fact = 1;
                     for (let i = 2; i <= num; i++) {
@@ -360,10 +363,10 @@
         }
 
         function backspace() {
-             display.value = display.value.slice(0, -1);
+            display.value = display.value.slice(0, -1);
         }
 
-         function toggleSign() {
+        function toggleSign() {
             if (display.value.startsWith("-")) {
                 display.value = display.value.slice(1);
             } else {
@@ -371,23 +374,33 @@
             }
         }
 
-        // Memory Functions
         function memoryAdd() {
             memory += parseFloat(display.value) || 0;
-            clearDisplay()
+            clearDisplay();
         }
         function memorySubtract() {
             memory -= parseFloat(display.value) || 0;
-            clearDisplay()
+            clearDisplay();
         }
         function memoryRecall() { display.value = memory; }
         function memoryClear() { memory = 0; }
 
         function toggleTheme() {
             document.body.classList.toggle("light-mode");
+             // Store the theme preference
+            const isLightMode = document.body.classList.contains('light-mode');
+            localStorage.setItem('lightMode', isLightMode);
         }
 
-         //keyboard
+        // Load theme preference on page load
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const isLightMode = localStorage.getItem('lightMode') === 'true';
+            if (isLightMode) {
+                document.body.classList.add('light-mode');
+                document.getElementById('theme-checkbox').checked = true; // Update checkbox
+            }
+        });
+
         document.addEventListener('keydown', function(event) {
             const key = event.key;
 
@@ -406,15 +419,12 @@
             } else if (key === '%') {
                 scientific('percent');
             }
-            // Add more keybindings as needed (e.g., for scientific functions)
         });
 
-
-          // Prevent zooming on double-tap on mobile (improves UX)
         document.addEventListener('dblclick', function(event) {
             event.preventDefault();
         }, { passive: false });
-    </script>
 
+    </script>
 </body>
 </html>
